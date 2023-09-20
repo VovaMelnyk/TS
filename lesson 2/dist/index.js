@@ -1,6 +1,26 @@
 // Index Properties
-// type StringDictionary = {
-//   [key: string]: string;
+// type Goods = {
+//   [key: string]: number;
+// };
+// type Fruits = {
+//   apples: number;
+//   banana: number;
+//   orange: number;
+// };
+// type FrozenGoods = {
+//   iceCream: number;
+//   fish: number;
+//   berry: number;
+// };
+// const fruits: Goods = {
+//   apples: 15,
+//   banana: 30,
+//   orange: 30,
+// };
+// const frozenGoods: Goods = {
+//   iceCream: 25,
+//   fish: 30,
+//   berry: 10,
 // };
 // const myDict: StringDictionary = {
 //   prop1: "value1",
@@ -23,29 +43,67 @@
 // Словник із змішаними значеннями:
 // Визначте інтерфейс для об'єкта, де ключем є рядок, а значенням може бути або рядок, або число.
 // Створіть декілька об'єктів цього типу.
+// type MixedType = {
+//   [key: string]: string | number;
+// };
+// const userInfo: MixedType = {
+//   name: "Bob",
+//   age: 23,
+//   country: "Ukraine",
+// };
+// const bookDetails: MixedType = {
+//   title: "Bible",
+//   pageCount: 350,
+// };
 // Generics
 // 1. Створюють загальні функції, класи, що можуть працювати з різними вхідними типами і збрерігати типізацію
 // function identity<T>(arg: T): T {
+//   return arg;
+// }
+//1
+// function identity<string>(arg: string): string {
+//   return arg;
+// }
+// 2
+// function identity<number>(arg: number): number {
 //   return arg;
 // }
 // let output1 = identity<string>("myString");
 // let output2 = identity<number>(100);
 // Завдання для студентів
 //  Створіть загальну функцію reverse, яка приймає масив будь-якого типу і повертає масив у зворотньому порядку.
+// function reverse<K>(items: K[]): K[] {
+//   return items.reverse();
+// }
 // let numbers = reverse<number>([1, 2, 3, 4, 5]);
 // console.log(numbers); // [5, 4, 3, 2, 1]
 // let strings = reverse<string>(["a", "b", "c", "d"]);
 // console.log(strings); // ["d", "c", "b", "a"]
+// let i const - звертаємся по назві змінної
+// <> - звертаємося по назві дженерика
 // extends та key of
-// // function lengthOfObject<T extends { length: number }>(obj: T): number {
-//     return obj.length;
+// function lengthOfObject<T extends { duration: number }>(obj: T): number {
+//   return obj.duration;
+// }
+// lengthOfObject({ name: "Earth", duration: 10 }); // 10
+// type obj = {
+// name: string
+//   length: number
 // }
 // Створіть загальну функцію getProperty, яка приймає об'єкт та ключ як рядок.
 // Функція повинна повертати значення цього ключа з об'єкта.
 // const student = {
 //   name: "John",
 //   age: 25,
+//   groupNumber: 12,
 // };
+// // type Student = {
+// //   name: string;
+// //   age: number;
+// // };
+// function getProperty<ObjectType, KeyType extends keyof ObjectType>(obj: ObjectType, key: KeyType): ObjectType[KeyType] {
+//   return obj[key];
+// }
 // let studentName = getProperty(student, "name");
 // console.log(studentName); // "John"
 // let studentAddress = getProperty(student, "address");
@@ -82,22 +140,26 @@
 // numbers.push(6); // Помилка: Property 'push' does not exist on type 'readonly number[]'.
 // numbers[0] = 0; // Помилка: Index signature in type 'readonly number[]' only permits reading.
 // Pick<T, K>
-// type Person  = {
+// type Person = {
 //   name: string;
 //   age: number;
 //   address: string;
-// }
-// type PersonSummary = Pick<Person, 'name' | 'age'>;
-// const johnSummary: PersonSummary = {
-//     name: "John",
-//     age: 30
 // };
-// // Це спрацює, тому що 'address' не є частиною типу 'PersonSummary'
-// // const invalidPerson: PersonSummary = {
-// //     name: "Anna",
-// //     age: 25,
-// //     address: "123 Main St"  // Помилка тут
+// type PersonSummary = Pick<Person, "name" | "age">;
+// // type PersonSummary = {
+// //   name: string;
+// //   age: number;
 // // };
+// const johnSummary: PersonSummary = {
+//   name: "John",
+//   age: 30,
+// };
+// Це спрацює, тому що 'address' не є частиною типу 'PersonSummary'
+// const invalidPerson: PersonSummary = {
+//     name: "Anna",
+//     age: 25,
+//     address: "123 Main St"  // Помилка тут
+// };
 // Record<K, T>
 // type CityDatabase = Record<string, number>;
 // const database: CityDatabase = {
@@ -119,6 +181,14 @@
 //   age: 30,
 //   // address: "123 Main St" // Ця властивість тут не допустима
 // };
+// function getPromise(): Promise<(string | number)[]> {
+//   return new Promise<(string | number)[]>((resolve) => {
+//     resolve(["Text", 50]);
+//   });
+// }
+// getPromise().then((data) => {
+//   console.log(data);
+// });
 // interface
 // interface Person {
 //   firstName: string;
@@ -183,7 +253,7 @@
 // Спроєктуйте інтерфейс для користувача з полями ім'я, email та дата народження.
 // Після цього створіть функцію, яка перевіряє, чи є користувач повнолітнім.
 // Робота з класами
-// Спроєктуйте інтерфейс CarProperties з такими характеристиками, як brand, year та fuelType. 
+// Спроєктуйте інтерфейс CarProperties з такими характеристиками, як brand, year та fuelType.
 // Створіть клас Car, який реалізує цей інтерфейс і має метод getDetails(), що виводить інформацію про автомобіль.
-// Спроєктуйте інтерфейс StudentData з полями name, studentID та major. 
+// Спроєктуйте інтерфейс StudentData з полями name, studentID та major.
 // Створіть клас Student, який реалізує цей інтерфейс і має метод introduce(), де студент представляється.
