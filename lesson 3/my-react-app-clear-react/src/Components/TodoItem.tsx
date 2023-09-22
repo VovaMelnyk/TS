@@ -1,6 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
+import { Task } from "../todoSlice";
 
-const TodoItem = ({ todo, onDelete }) => {
+interface TodoItemProps {
+  todo: Task;
+  onDelete: (id: number) => void;
+}
+
+// interface ITodoItemProps {}
+
+const TodoItem: FC<TodoItemProps> = ({ todo, onDelete }) => {
   return (
     <li>
       <p>{todo.text}</p>
